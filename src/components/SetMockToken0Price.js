@@ -58,7 +58,7 @@ export function SetMockToken0Price() {
             alt="icon"
           ></Image>
           <input
-            className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800"
+            className="p-4 pl-12 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
             placeholder="Enter Price"
             size="lg"
             onChange={handleChange}

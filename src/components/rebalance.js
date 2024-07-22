@@ -72,15 +72,9 @@ export function Rebalance({
             <label className="text-gray-800 font-semibold text-[16px] leading-[18px] ">
               Enter Token0 Weight
             </label>
-            <Image
-              height={30}
-              width={30}
-              src="/sui-icon.svg"
-              className="absolute top-[46px] left-2"
-              alt="icon"
-            ></Image>
+
             <input
-              className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800 mt-2"
+              className="p-4 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
               placeholder="Index Token Amount"
               size="lg"
               onChange={handleToken0Weight}
@@ -93,15 +87,9 @@ export function Rebalance({
             <label className="text-gray-800 font-semibold text-[16px] leading-[18px] ">
               Enter Token1 Weight
             </label>
-            <Image
-              height={30}
-              width={30}
-              src="/sui-icon.svg"
-              className="absolute top-[46px] left-2"
-              alt="icon"
-            ></Image>
+
             <input
-              className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800 mt-2"
+              className="p-4 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
               placeholder="Index Token Amount"
               size="lg"
               onChange={handleToken1Weight}

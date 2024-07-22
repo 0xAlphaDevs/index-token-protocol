@@ -1,8 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import FaqCard from "../../components/faq";
-import Footer from "@/components/footer";
 import { useRouter } from "next/navigation";
 import { SetMockToken0Price } from "@/components/SetMockToken0Price";
 import { SetMockToken1Price } from "@/components/SetMockToken1Price";
@@ -11,24 +8,8 @@ import { SetMinterAddress } from "@/components/SetMinterAddress";
 export default function AppPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("token0Price");
-  const [stakeAmount, setStakeAmount] = useState();
-  const [unstakeAmount, setUnstakeAmount] = useState();
-  const [intBalance, setintBalance] = useState(0);
-  const [stakedintBalance, setStakedintBalance] = useState(0);
 
-  function getBalances() {
-    // TODO: get balances from the blockchain 🟡
-    return {
-      intBalance: 2000,
-      stakedintBalance: 1000,
-    };
-  }
-
-  useEffect(() => {
-    const { intBalance, stakedintBalance } = getBalances();
-    setintBalance(intBalance);
-    setStakedintBalance(stakedintBalance);
-  }, []);
+  useEffect(() => {}, []);
 
   const activeTabStyle = "bg-gray-900 text-white";
   const inactiveTabStyle = "bg-white text-black";
@@ -75,7 +56,7 @@ export default function AppPage() {
           <button
             onClick={() => setActiveTab("minter")}
             className={`${
-              activeTab === "unstake" ? activeTabStyle : inactiveTabStyle
+              activeTab === "minter" ? activeTabStyle : inactiveTabStyle
             } m-4 py-3 px-14 rounded-2xl border-gray-900  shadow-none hover:bg-gray-900 hover:text-white`}
           >
             Set Minter Address
