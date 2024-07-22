@@ -7,6 +7,7 @@ import { MintToken0 } from "@/components/mintToken0";
 import { MintToken1 } from "@/components/mintToken1";
 import { useRouter } from "next/navigation";
 import { ConnectKitButton } from "connectkit";
+import Navbar from "@/components/navbar";
 
 export default function AppPage() {
   const router = useRouter();
@@ -36,15 +37,7 @@ export default function AppPage() {
   return (
     <div className="bg-custom-gradient min-h-screen">
       {/* <img src="/background.jpg" className="absolute z-[-200]" /> */}
-      <div className="flex justify-between px-2 sm:px-10 py-4">
-        <a href="/" className="-m-1.5 p-1.5">
-          <span className="text-xl font-bold">Index Token</span>
-        </a>
-        {/* <button className=" bg-white text-black p-3 rounded-[25px] font-bold">
-          Connect wallet
-        </button> */}
-        <ConnectKitButton />
-      </div>
+      <Navbar />
       <div className="text-center pt-5 font-bold text-white text-[60px]">
         {" "}
         Mint Mock tokens
