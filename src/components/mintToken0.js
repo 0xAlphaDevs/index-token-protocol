@@ -53,15 +53,18 @@ export function MintToken0({}) {
       )}
       <CardBody className="">
         <div className="relative">
+          <label className="text-gray-800 font-semibold text-[16px] leading-[18px] ">
+            Enter Token0 Amount
+          </label>
           <Image
             height={30}
             width={30}
             src="/sui-icon.svg"
-            className="absolute top-[14px] left-2"
+            className="absolute top-[39px] left-2"
             alt="icon"
           ></Image>
           <input
-            className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800"
+            className="p-4 pl-12 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
             placeholder="Index Token Amount"
             size="lg"
             onChange={handleChange}
@@ -70,7 +73,7 @@ export function MintToken0({}) {
           ></input>
           <button
             onClick={() => setAmount(balance)}
-            className="absolute right-0 top-[10px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
+            className="absolute right-1 top-[34px] bg-white rounded-lg text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
           >
             MAX
           </button>
