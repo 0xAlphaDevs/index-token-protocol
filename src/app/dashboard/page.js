@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import { useRouter } from "next/navigation";
 import { MintIndexToken } from "@/components/mintIndexToken";
 import { BurnIndexToken } from "@/components/burnIndexToken";
+import { ConnectKitButton } from "connectkit";
 
 export default function AppPage() {
   const router = useRouter();
@@ -42,9 +43,10 @@ export default function AppPage() {
         <a href="/" className="-m-1.5 p-1.5">
           <span className="text-xl font-bold">Index Token</span>
         </a>
-        <button className=" bg-white text-black p-3 rounded-[25px] font-bold">
+        {/* <button className=" bg-white text-black p-3 rounded-[25px] font-bold">
           Connect wallet
-        </button>
+        </button> */}
+        <ConnectKitButton />
       </div>
       <div className="text-center pt-5 font-bold text-white text-[60px]">
         {" "}
