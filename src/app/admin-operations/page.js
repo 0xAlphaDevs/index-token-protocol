@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { SetMockToken0Price } from "@/components/SetMockToken0Price";
 import { SetMockToken1Price } from "@/components/SetMockToken1Price";
 import { SetMinterAddress } from "@/components/SetMinterAddress";
+import { ConnectKitButton } from "connectkit";
 
 export default function AppPage() {
   const router = useRouter();
@@ -21,9 +22,10 @@ export default function AppPage() {
         <a href="/" className="-m-1.5 p-1.5">
           <span className="text-xl font-bold">Index Token</span>
         </a>
-        <button className=" bg-white text-black p-3 rounded-[25px] font-bold">
+        {/* <button className=" bg-white text-black p-3 rounded-[25px] font-bold">
           Connect wallet
-        </button>
+        </button> */}
+        <ConnectKitButton />
       </div>
       <div className="text-center pt-5 font-bold text-white text-[60px]">
         {" "}
