@@ -74,15 +74,15 @@ export default function AppPage() {
         </div>
         {activeTab == "stake" ? (
           <MintToken0
-            balance={intBalance}
-            amount={stakeAmount}
-            setAmount={setStakeAmount}
+          // balance={intBalance}
+          // amount={stakeAmount}
+          // setAmount={setStakeAmount}
           />
         ) : (
           <MintToken1
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
+          // balance={stakedintBalance}
+          // amount={unstakeAmount}
+          // setAmount={setUnstakeAmount}
           />
         )}
       </div>

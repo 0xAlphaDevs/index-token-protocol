@@ -12,8 +12,10 @@ import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
 
-export function MintToken1({ balance, amount, setAmount }) {
+export function MintToken1({}) {
   const [showModal, setShowModal] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const balance = 10000;
 
   function handleChange(e) {
     if (e.target.value > balance) {
@@ -23,7 +25,7 @@ export function MintToken1({ balance, amount, setAmount }) {
     }
   }
 
-  function handleUnstake() {
+  function handleMint() {
     setShowModal(true);
   }
 
@@ -39,6 +41,7 @@ export function MintToken1({ balance, amount, setAmount }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <Card className="w-96">
       {showModal && (
@@ -63,6 +66,7 @@ export function MintToken1({ balance, amount, setAmount }) {
             size="lg"
             onChange={handleChange}
             value={amount}
+            type="number"
           ></input>
           <button
             onClick={() => setAmount(balance)}
@@ -76,12 +80,7 @@ export function MintToken1({ balance, amount, setAmount }) {
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button
-          onClick={handleUnstake}
-          variant="gradient"
-          color="blue"
-          fullWidth
-        >
+        <Button onClick={handleMint} variant="gradient" color="blue" fullWidth>
           Mint
         </Button>
       </CardFooter>
