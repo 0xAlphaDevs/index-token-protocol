@@ -85,13 +85,8 @@ export function Rebalance({
               size="lg"
               onChange={handleToken0Weight}
               value={token0Weight}
+              type="number"
             ></input>
-            {/* <button
-              onClick={() => setAmount(balance)}
-              className="absolute right-0 top-[40px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
-            >
-              MAX
-            </button> */}
           </div>
 
           <div className="relative mt-4">
@@ -111,13 +106,8 @@ export function Rebalance({
               size="lg"
               onChange={handleToken1Weight}
               value={token1Weight}
+              type="number"
             ></input>
-            {/* <button
-              onClick={() => setAmount(balance)}
-              className="absolute right-0 top-[40px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
-            >
-              MAX
-            </button> */}
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">

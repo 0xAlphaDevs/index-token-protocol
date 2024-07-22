@@ -12,33 +12,25 @@ import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
 
-export function DepositMockToken0({
-  indexTokenValue,
-  token0Weight,
-  token1Weight,
-  setToken0Weight,
-  setToken1Weight,
-}) {
+export function DepositMockToken0({}) {
   const [showModal, setShowModal] = useState(false);
-  function handleToken0Weight(e) {
-    if (e.target.value > 100) {
-      setToken0Weight(100);
-      setToken1Weight(0);
+  const [amount, setAmount] = useState(0);
+  const balance = 1000;
+  const allowance = 0;
+
+  function handleChange(e) {
+    if (e.target.value > balance) {
+      setAmount(balance);
     } else {
-      setToken0Weight(e.target.value);
-      setToken1Weight(100 - e.target.value);
+      setAmount(e.target.value);
     }
   }
-  function handleToken1Weight(e) {
-    if (e.target.value > 100) {
-      setToken1Weight(100);
-      setToken0Weight(0);
-    } else {
-      setToken1Weight(e.target.value);
-      setToken0Weight(100 - e.target.value);
-    }
+
+  function handleToken0Deposit() {
+    setShowModal(true);
   }
-  function handleRebalance() {
+
+  function handleToken0Approve() {
     setShowModal(true);
   }
 
@@ -60,7 +52,7 @@ export function DepositMockToken0({
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Deposited ${amount} MT0.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -81,30 +73,42 @@ export function DepositMockToken0({
               className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800 mt-2"
               placeholder="Index Token Amount"
               size="lg"
-              onChange={handleToken0Weight}
-              value={token0Weight}
+              onChange={handleChange}
+              value={amount}
+              type="number"
             ></input>
-            {/* <button
+            <button
               onClick={() => setAmount(balance)}
               className="absolute right-0 top-[40px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
             >
               MAX
-            </button> */}
+            </button>
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">
-          Balance : {indexTokenValue} MT0
+          Balance : {balance} MT0
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button
-          onClick={handleRebalance}
-          variant="gradient"
-          color="blue"
-          fullWidth
-        >
-          Rebalance Token Weights
-        </Button>
+        {allowance === 0 ? (
+          <Button
+            onClick={handleToken0Approve}
+            variant="gradient"
+            color="blue"
+            fullWidth
+          >
+            Approve
+          </Button>
+        ) : (
+          <Button
+            onClick={handleToken0Deposit}
+            variant="gradient"
+            color="blue"
+            fullWidth
+          >
+            Deposit
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

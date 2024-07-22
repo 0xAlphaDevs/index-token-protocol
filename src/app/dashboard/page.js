@@ -110,17 +110,9 @@ export default function AppPage() {
             setToken1Weight={setToken1Weight}
           />
         ) : activeTab == "depositMockToken0" ? (
-          <DepositMockToken0
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <DepositMockToken0 />
         ) : activeTab == "depositMockToken1" ? (
-          <DepositMockToken1
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <DepositMockToken1 />
         ) : activeTab == "mint" ? (
           <MintIndexToken
             balance={stakedintBalance}
