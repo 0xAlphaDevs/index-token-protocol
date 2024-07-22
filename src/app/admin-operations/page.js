@@ -34,7 +34,7 @@ export default function AppPage() {
   const inactiveTabStyle = "bg-white text-black";
 
   return (
-    <div className="bg-[url(/background.jpg)] bg-no-repeat bg-cover w-full h-screen">
+    <div className="bg-custom-gradient min-h-screen">
       {/* <img src="/background.jpg" className="absolute z-[-200]" /> */}
       <div className="flex justify-between px-2 sm:px-10 py-4">
         <a href="/" className="-m-1.5 p-1.5">
@@ -82,23 +82,11 @@ export default function AppPage() {
           </button>
         </div>
         {activeTab == "token0Price" ? (
-          <SetMockToken0Price
-            balance={intBalance}
-            amount={stakeAmount}
-            setAmount={setStakeAmount}
-          />
+          <SetMockToken0Price />
         ) : activeTab == "token1Price" ? (
-          <SetMockToken1Price
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <SetMockToken1Price />
         ) : activeTab == "minter" ? (
-          <SetMinterAddress
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <SetMinterAddress />
         ) : null}
       </div>
       <div className="flex flex-col justify-center items-center">

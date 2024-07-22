@@ -12,16 +12,17 @@ import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
 
-export function SetMockToken1Price({ balance, amount, setAmount }) {
+export function SetMockToken1Price() {
   const [showModal, setShowModal] = useState(false);
+  const [amount, setAmount] = useState(0);
+
+  const price = 1;
+
   function handleChange(e) {
-    if (e.target.value > balance) {
-      setAmount(balance);
-    } else {
-      setAmount(e.target.value);
-    }
+    setAmount(e.target.value);
   }
-  function handleStake() {
+
+  function handleSetPrice() {
     setShowModal(true);
   }
 
@@ -58,25 +59,25 @@ export function SetMockToken1Price({ balance, amount, setAmount }) {
           ></Image>
           <input
             className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800"
-            placeholder="Index Token Amount"
+            placeholder="Enter Price"
             size="lg"
             onChange={handleChange}
             value={amount}
+            type="number"
           ></input>
-          <button
-            onClick={() => setAmount(balance)}
-            className="absolute right-0 top-[10px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
-          >
-            MAX
-          </button>
         </div>
-        <div className="flex justify-end pr-4 mt-2 font-semibold">
-          Balance : {balance} Index Token
+        <div className="flex justify-center pr-4 mt-2 ">
+          Token1 Price : {price} USD
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={handleStake} variant="gradient" color="blue" fullWidth>
-          Mint
+        <Button
+          onClick={handleSetPrice}
+          variant="gradient"
+          color="blue"
+          fullWidth
+        >
+          Set Price
         </Button>
       </CardFooter>
     </Card>

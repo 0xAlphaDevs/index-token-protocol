@@ -12,33 +12,20 @@ import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
 
-export function MintIndexToken({
-  indexTokenValue,
-  token0Weight,
-  token1Weight,
-  setToken0Weight,
-  setToken1Weight,
-}) {
+export function MintIndexToken({}) {
   const [showModal, setShowModal] = useState(false);
-  function handleToken0Weight(e) {
-    if (e.target.value > 100) {
-      setToken0Weight(100);
-      setToken1Weight(0);
+  const [amount, setAmount] = useState(0);
+
+  const totalMintableAmount = 1000;
+
+  function handleChange(e) {
+    if (e.target.value > totalMintableAmount) {
+      setAmount(totalMintableAmount);
     } else {
-      setToken0Weight(e.target.value);
-      setToken1Weight(100 - e.target.value);
+      setAmount(e.target.value);
     }
   }
-  function handleToken1Weight(e) {
-    if (e.target.value > 100) {
-      setToken1Weight(100);
-      setToken0Weight(0);
-    } else {
-      setToken1Weight(e.target.value);
-      setToken0Weight(100 - e.target.value);
-    }
-  }
-  function handleRebalance() {
+  function handleMint() {
     setShowModal(true);
   }
 
@@ -68,7 +55,7 @@ export function MintIndexToken({
         <div>
           <div className="relative">
             <label className="text-gray-800 font-semibold text-[16px] leading-[18px] ">
-              Enter Index Token Mint Amount
+              Enter Mint Amount
             </label>
             <Image
               height={30}
@@ -81,29 +68,25 @@ export function MintIndexToken({
               className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800 mt-2"
               placeholder="Index Token Amount"
               size="lg"
-              onChange={handleToken0Weight}
-              value={token0Weight}
+              onChange={handleChange}
+              value={amount}
+              type="number"
             ></input>
-            {/* <button
-              onClick={() => setAmount(balance)}
+            <button
+              onClick={() => setAmount(totalMintableAmount)}
               className="absolute right-0 top-[40px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
             >
               MAX
-            </button> */}
+            </button>
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">
-          Index Token Supply : {indexTokenValue} INT
+          Max Mintable : {totalMintableAmount} INT
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button
-          onClick={handleRebalance}
-          variant="gradient"
-          color="blue"
-          fullWidth
-        >
-          Rebalance Token Weights
+        <Button onClick={handleMint} variant="gradient" color="blue" fullWidth>
+          Mint Index Tokens
         </Button>
       </CardFooter>
     </Card>

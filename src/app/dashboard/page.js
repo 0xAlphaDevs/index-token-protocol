@@ -37,7 +37,7 @@ export default function AppPage() {
   const inactiveTabStyle = "bg-white text-black";
 
   return (
-    <div className="bg-custom-gradient h-full">
+    <div className="bg-custom-gradient min-h-screen">
       <div className="flex justify-between px-2 sm:px-10 py-4">
         <a href="/" className="-m-1.5 p-1.5">
           <span className="text-xl font-bold">Index Token</span>
@@ -114,17 +114,9 @@ export default function AppPage() {
         ) : activeTab == "depositMockToken1" ? (
           <DepositMockToken1 />
         ) : activeTab == "mint" ? (
-          <MintIndexToken
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <MintIndexToken />
         ) : activeTab == "burn" ? (
-          <BurnIndexToken
-            balance={stakedintBalance}
-            amount={unstakeAmount}
-            setAmount={setUnstakeAmount}
-          />
+          <BurnIndexToken />
         ) : null}
       </div>
       <div className="flex  justify-center items-center">

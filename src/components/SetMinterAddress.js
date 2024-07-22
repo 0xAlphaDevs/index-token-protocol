@@ -12,16 +12,17 @@ import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
 
-export function SetMinterAddress({ balance, amount, setAmount }) {
+export function SetMinterAddress() {
   const [showModal, setShowModal] = useState(false);
+  const [address, setAddress] = useState("");
+
+  const minter = "0x23904dojvq9847r";
+
   function handleChange(e) {
-    if (e.target.value > balance) {
-      setAmount(balance);
-    } else {
-      setAmount(e.target.value);
-    }
+    setAddress(e.target.value);
   }
-  function handleStake() {
+
+  function handleSetPrice() {
     setShowModal(true);
   }
 
@@ -49,34 +50,33 @@ export function SetMinterAddress({ balance, amount, setAmount }) {
       )}
       <CardBody className="">
         <div className="relative">
-          <Image
+          {/* <Image
             height={30}
             width={30}
             src="/sui-icon.svg"
             className="absolute top-[14px] left-2"
             alt="icon"
-          ></Image>
+          ></Image> */}
           <input
             className="pr-28 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] pl-[50px] font-[500] text-[16px] leading-[18px] text-gray-800"
-            placeholder="Index Token Amount"
+            placeholder="Enter Minter Address"
             size="lg"
             onChange={handleChange}
-            value={amount}
+            value={address}
           ></input>
-          <button
-            onClick={() => setAmount(balance)}
-            className="absolute right-0 top-[10px] text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
-          >
-            MAX
-          </button>
         </div>
-        <div className="flex justify-end pr-4 mt-2 font-semibold">
-          Balance : {balance} Index Token
+        <div className="flex justify-center pr-4 mt-2 ">
+          Current Minter : {minter}
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={handleStake} variant="gradient" color="blue" fullWidth>
-          Mint
+        <Button
+          onClick={handleSetPrice}
+          variant="gradient"
+          color="blue"
+          fullWidth
+        >
+          Set Minter
         </Button>
       </CardFooter>
     </Card>
