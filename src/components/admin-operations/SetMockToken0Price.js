@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
-import { useReadContract } from "wagmi";
+import { useReadContract, useWriteContract, useAccount } from "wagmi";
 import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
 import { MockToken0Address } from "@/lib/contracts/MockToken0";
 
@@ -20,6 +20,7 @@ export function SetMockToken0Price() {
   const [showModal, setShowModal] = useState(false);
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(0);
+  const { address } = useAccount();
 
   const { data, isLoading } = useReadContract({
     abi: IndexTokenAbi,
@@ -27,6 +28,8 @@ export function SetMockToken0Price() {
     functionName: "getTokenPrice",
     args: [MockToken0Address],
   });
+
+  const { isSuccess, isPending, writeContract } = useWriteContract();
 
   useEffect(() => {
     console.log(data);
@@ -39,7 +42,18 @@ export function SetMockToken0Price() {
   }
 
   function handleSetPrice() {
-    setShowModal(true);
+    if (amount > 0) {
+      console.log(address, amount);
+      writeContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "setMockTokenPrice",
+        args: [MockToken0Address, BigInt(amount * 10 ** 6)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   // close modal when clicked outside
@@ -55,12 +69,18 @@ export function SetMockToken0Price() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Card className="w-96">
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Updated Price of MT0 to ${amount} USD.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -89,9 +109,9 @@ export function SetMockToken0Price() {
       <CardFooter className="pt-0">
         <Button
           onClick={handleSetPrice}
-          variant="gradient"
           color="blue"
-          fullWidth
+          className=" w-full"
+          disabled={isPending}
         >
           Set Price
         </Button>

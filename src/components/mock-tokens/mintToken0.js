@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardHeader,
@@ -9,24 +10,51 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import { TransactionModal } from "./modal";
+import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { MockToken0Abi, MockToken0Address } from "@/lib/contracts/MockToken0";
 
 export function MintToken0({}) {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState(0);
-  const balance = 10000;
+  const [balance, setBalance] = useState(0);
+  const { address } = useAccount();
+
+  const { data, isLoading } = useReadContract({
+    abi: MockToken0Abi,
+    address: MockToken0Address,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const { isSuccess, isPending, writeContract } = useWriteContract();
+
+  useEffect(() => {
+    console.log(data);
+    if (!data) return;
+    setBalance(Number(data) / 10 ** 18);
+  }, [data]);
 
   function handleChange(e) {
-    if (e.target.value > balance) {
-      setAmount(balance);
-    } else {
-      setAmount(e.target.value);
-    }
+    if (e.target.value > 1000) {
+      setAmount(1000);
+    } else setAmount(e.target.value);
   }
 
-  function handleMint() {
-    setShowModal(true);
+  async function handleMint() {
+    if (amount > 0) {
+      console.log(address, amount);
+      writeContract({
+        address: MockToken0Address,
+        abi: MockToken0Abi,
+        functionName: "mint",
+        args: [address, BigInt(amount * 10 ** 18)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   // close modal when clicked outside
@@ -42,12 +70,18 @@ export function MintToken0({}) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Card className="w-96">
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Minted ${amount} Mock Token 0.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -59,7 +93,7 @@ export function MintToken0({}) {
           <Image
             height={30}
             width={30}
-            src="/sui-icon.svg"
+            src="/mt0.png"
             className="absolute top-[39px] left-2"
             alt="icon"
           ></Image>
@@ -72,18 +106,23 @@ export function MintToken0({}) {
             type="number"
           ></input>
           <button
-            onClick={() => setAmount(balance)}
+            onClick={() => setAmount(1000)}
             className="absolute right-1 top-[34px] bg-white rounded-lg text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
           >
             MAX
           </button>
         </div>
         <div className="flex justify-end pr-4 mt-2 font-semibold">
-          Balance : {balance} Index Token
+          Balance : {balance} MT0
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={handleMint} variant="gradient" color="blue" fullWidth>
+        <Button
+          onClick={handleMint}
+          color="blue"
+          className=" w-full"
+          disabled={isPending}
+        >
           Mint
         </Button>
       </CardFooter>

@@ -11,17 +11,33 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
+import { useWriteContract } from "wagmi";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
+import { MockToken1Address } from "@/lib/contracts/MockToken1";
+import { isAddress } from "viem";
 
 export function SetMinterAddress() {
   const [showModal, setShowModal] = useState(false);
   const [address, setAddress] = useState("");
 
+  const { isSuccess, isPending, writeContract } = useWriteContract();
+
   function handleChange(e) {
     setAddress(e.target.value);
   }
 
-  function handleSetPrice() {
-    setShowModal(true);
+  function handleSetMinter() {
+    if (isAddress(address)) {
+      writeContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "setMinter",
+        args: [address],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid ETH address");
+    }
   }
 
   // close modal when clicked outside
@@ -37,12 +53,18 @@ export function SetMinterAddress() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Card className="w-96">
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Minter address updated to ${address}.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -66,10 +88,10 @@ export function SetMinterAddress() {
       </CardBody>
       <CardFooter className="pt-0">
         <Button
-          onClick={handleSetPrice}
-          variant="gradient"
+          onClick={handleSetMinter}
           color="blue"
-          fullWidth
+          className=" w-full"
+          disabled={isPending}
         >
           Set Minter
         </Button>

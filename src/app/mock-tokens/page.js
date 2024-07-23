@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import FaqCard from "../../components/faq";
-import Footer from "@/components/footer";
-import { MintToken0 } from "@/components/mintToken0";
-import { MintToken1 } from "@/components/mintToken1";
+
+import { MintToken0 } from "@/components/mock-tokens/mintToken0";
+import { MintToken1 } from "@/components/mock-tokens/mintToken1";
 import { useRouter } from "next/navigation";
 import { ConnectKitButton } from "connectkit";
 import Navbar from "@/components/navbar";

@@ -11,34 +11,83 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { MockToken0Abi, MockToken0Address } from "@/lib/contracts/MockToken0";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
 
 export function DepositMockToken0({}) {
-  const [showModal, setShowModal] = useState(false);
+  const [showApproveModal, setShowApproveModal] = useState(false);
+  const [showDepositModal, setShowDepositModal] = useState(false);
   const [amount, setAmount] = useState(0);
-  const balance = 1000;
-  const allowance = 0;
+  const { address } = useAccount();
+
+  const { data: allowance } = useReadContract({
+    abi: MockToken0Abi,
+    address: MockToken0Address,
+    functionName: "allowance",
+    args: [address, IndexTokenAddress],
+  });
+
+  const { data: balance } = useReadContract({
+    abi: MockToken0Abi,
+    address: MockToken0Address,
+    functionName: "balanceOf",
+    args: [address],
+  });
+
+  const {
+    isSuccess: isApproveSuccess,
+    isPending: isApprovePending,
+    writeContract: writeApproveContract,
+  } = useWriteContract();
+  const {
+    isSuccess: isDepositSuccess,
+    isPending: isDepositPending,
+    writeContract: writeDepositContract,
+  } = useWriteContract();
 
   function handleChange(e) {
-    if (e.target.value > balance) {
-      setAmount(balance);
+    if (e.target.value > Number(balance) / 10 ** 18) {
+      setAmount(Number(balance) / 10 ** 18);
     } else {
       setAmount(e.target.value);
     }
   }
 
   function handleToken0Deposit() {
-    setShowModal(true);
+    if (amount > 0) {
+      writeDepositContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "depositReserveTokens",
+        args: [MockToken0Address, BigInt(amount * 10 ** 18)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   function handleToken0Approve() {
-    setShowModal(true);
+    if (amount > 0) {
+      writeApproveContract({
+        address: MockToken0Address,
+        abi: MockToken0Abi,
+        functionName: "approve",
+        args: [IndexTokenAddress, BigInt(amount * 10 ** 18)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   // close modal when clicked outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (event.target.className.includes("backdrop-blur-sm")) {
-        setShowModal(false);
+        setShowDepositModal(false);
+        setShowApproveModal(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -47,13 +96,32 @@ export function DepositMockToken0({}) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isApproveSuccess) {
+      setShowApproveModal(true);
+    }
+  }, [isApproveSuccess]);
+
+  useEffect(() => {
+    if (isDepositSuccess) {
+      setShowDepositModal(true);
+    }
+  }, [isDepositSuccess]);
+
   return (
     <Card className="w-96">
-      {showModal && (
+      {showApproveModal && (
+        <TransactionModal
+          text="Transaction Successful"
+          description={`Approved ${amount} MT0.`}
+          handleModalClose={() => setShowApproveModal(false)}
+        />
+      )}
+      {showDepositModal && (
         <TransactionModal
           text="Transaction Successful"
           description={`Deposited ${amount} MT0.`}
-          handleModalClose={() => setShowModal(false)}
+          handleModalClose={() => setShowDepositModal(false)}
         />
       )}
       <CardBody className="">
@@ -78,7 +146,7 @@ export function DepositMockToken0({}) {
               type="number"
             ></input>
             <button
-              onClick={() => setAmount(balance)}
+              onClick={() => setAmount(Number(balance) / 10 ** 18)}
               className="absolute right-1 top-[34px] bg-white rounded-lg text-blue-600 font-bold hover:bg-blue-100 p-2 hover:rounded-lg"
             >
               MAX
@@ -86,25 +154,25 @@ export function DepositMockToken0({}) {
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">
-          Balance : {balance} MT0
+          Balance : {Number(balance) / 10 ** 18} MT0
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        {allowance === 0 ? (
+        {Number(allowance) / 10 ** 18 === 0 ? (
           <Button
             onClick={handleToken0Approve}
-            variant="gradient"
             color="blue"
-            fullWidth
+            className=" w-full"
+            disabled={isApprovePending}
           >
             Approve
           </Button>
         ) : (
           <Button
             onClick={handleToken0Deposit}
-            variant="gradient"
             color="blue"
-            fullWidth
+            className=" w-full"
+            disabled={isDepositPending}
           >
             Deposit
           </Button>

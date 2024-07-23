@@ -15,25 +15,6 @@ import Navbar from "@/components/navbar";
 export default function AppPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("rebalance");
-  const [token0Weight, setToken0Weight] = useState();
-  const [token1Weight, setToken1Weight] = useState();
-  const [unstakeAmount, setUnstakeAmount] = useState();
-  const [indexTokenValue, setIndexTokenValue] = useState(140);
-  const [stakedintBalance, setStakedintBalance] = useState(0);
-
-  function getBalances() {
-    // TODO: get balances from the blockchain 🟡
-    return {
-      indexTokenValue: 140,
-      stakedintBalance: 1000,
-    };
-  }
-
-  useEffect(() => {
-    const { indexTokenValue, stakedintBalance } = getBalances();
-    setIndexTokenValue(indexTokenValue);
-    setStakedintBalance(stakedintBalance);
-  }, []);
 
   const activeTabStyle = "bg-gray-900 text-white";
   const inactiveTabStyle = "bg-white text-black";
@@ -97,13 +78,7 @@ export default function AppPage() {
           </button>
         </div>
         {activeTab == "rebalance" ? (
-          <Rebalance
-            indexTokenValue={indexTokenValue}
-            token0Weight={token0Weight}
-            token1Weight={token1Weight}
-            setToken0Weight={setToken0Weight}
-            setToken1Weight={setToken1Weight}
-          />
+          <Rebalance />
         ) : activeTab == "depositMockToken0" ? (
           <DepositMockToken0 />
         ) : activeTab == "depositMockToken1" ? (

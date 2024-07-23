@@ -11,17 +11,46 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
 
-export function Rebalance({
-  indexTokenValue,
-  token0Weight,
-  token1Weight,
-  setToken0Weight,
-  setToken1Weight,
-}) {
+export function Rebalance({}) {
   const [showModal, setShowModal] = useState(false);
   const [currentToken0Weight, setCurrentToken0Weight] = useState(50);
   const [currentToken1Weight, setCurrentToken1Weight] = useState(50);
+  const [token0Weight, setToken0Weight] = useState();
+  const [token1Weight, setToken1Weight] = useState();
+  const [indexTokenValue, setIndexTokenValue] = useState(0);
+
+  const { data: data0 } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "token0Weight",
+  });
+
+  const { data: data1 } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "token1Weight",
+  });
+
+  const { data: intValue } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "calculateIndexTokenValue",
+  });
+
+  const { isSuccess, isPending, writeContract } = useWriteContract();
+
+  useEffect(() => {
+    if (!data0 || !data1) return;
+    else {
+      setCurrentToken0Weight(data0);
+      setCurrentToken1Weight(data1);
+      setIndexTokenValue(Number(intValue) / 10 ** 6);
+    }
+  }, [data0, data1, intValue]);
+
   function handleToken0Weight(e) {
     if (e.target.value > 100) {
       setToken0Weight(100);
@@ -41,7 +70,17 @@ export function Rebalance({
     }
   }
   function handleRebalance() {
-    setShowModal(true);
+    if (token0Weight > 0 && token1Weight > 0) {
+      writeContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "rebalance",
+        args: [BigInt(token0Weight), BigInt(token1Weight)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter valid weights");
+    }
   }
 
   // close modal when clicked outside
@@ -57,12 +96,18 @@ export function Rebalance({
     };
   }, []);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Card className="w-96">
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Index Token Rebalanced successfully.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -111,9 +156,9 @@ export function Rebalance({
       <CardFooter className="pt-0">
         <Button
           onClick={handleRebalance}
-          variant="gradient"
           color="blue"
-          fullWidth
+          className=" w-full"
+          disabled={isPending}
         >
           Rebalance Token Weights
         </Button>

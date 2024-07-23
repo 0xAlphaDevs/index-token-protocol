@@ -11,12 +11,29 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 export function MintIndexToken({}) {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState(0);
+  const [totalMintableAmount, setTotalMintableAmount] = useState(0);
 
-  const totalMintableAmount = 1000;
+  const { address } = useAccount();
+
+  const { data, isLoading } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "getTotalMintableINT",
+  });
+
+  const { isSuccess, isPending, writeContract } = useWriteContract();
+
+  useEffect(() => {
+    console.log(data);
+    if (!data) return;
+    setTotalMintableAmount(Number(data) / 10 ** 18);
+  }, [data]);
 
   function handleChange(e) {
     if (e.target.value > totalMintableAmount) {
@@ -26,7 +43,17 @@ export function MintIndexToken({}) {
     }
   }
   function handleMint() {
-    setShowModal(true);
+    if (amount > 0) {
+      writeContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "mint",
+        args: [address, BigInt(amount * 10 ** 18)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   // close modal when clicked outside
@@ -42,12 +69,18 @@ export function MintIndexToken({}) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
+
   return (
     <Card className="w-96">
       {showModal && (
         <TransactionModal
           text="Transaction Successful"
-          description={`Staked ${amount} Index Token.`}
+          description={`Minted ${amount} Index Tokens.`}
           handleModalClose={() => setShowModal(false)}
         />
       )}
@@ -85,7 +118,12 @@ export function MintIndexToken({}) {
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={handleMint} variant="gradient" color="blue" fullWidth>
+        <Button
+          onClick={handleMint}
+          color="blue"
+          className=" w-full"
+          disabled={isPending}
+        >
           Mint Index Tokens
         </Button>
       </CardFooter>

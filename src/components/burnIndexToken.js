@@ -11,12 +11,30 @@ import {
 import Image from "next/image";
 import { TransactionModal } from "./modal";
 import { useEffect, useState } from "react";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
+import { useReadContract, useWriteContract, useAccount } from "wagmi";
 
 export function BurnIndexToken({}) {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState(0);
 
-  const totalINTSupply = 9990;
+  const { address } = useAccount();
+
+  const [totalINTSupply, setTotalINTSupply] = useState(0);
+
+  const { data, isLoading } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "totalSupply",
+  });
+
+  const { isSuccess, isPending, writeContract } = useWriteContract();
+
+  useEffect(() => {
+    console.log(data);
+    if (!data) return;
+    setTotalINTSupply(Number(data) / 10 ** 18);
+  }, [data]);
 
   function handleChange(e) {
     if (e.target.value > totalINTSupply) {
@@ -25,8 +43,18 @@ export function BurnIndexToken({}) {
       setAmount(e.target.value);
     }
   }
-  function handleMint() {
-    setShowModal(true);
+  function handleBurn() {
+    if (amount > 0) {
+      writeContract({
+        address: IndexTokenAddress,
+        abi: IndexTokenAbi,
+        functionName: "burn",
+        args: [address, BigInt(amount * 10 ** 18)],
+        chainId: 421_614,
+      });
+    } else {
+      alert("Please enter a valid amount");
+    }
   }
 
   // close modal when clicked outside
@@ -41,6 +69,12 @@ export function BurnIndexToken({}) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setShowModal(true);
+    }
+  }, [isSuccess]);
 
   return (
     <Card className="w-96">
@@ -85,7 +119,12 @@ export function BurnIndexToken({}) {
         </div>
       </CardBody>
       <CardFooter className="pt-0">
-        <Button onClick={handleMint} variant="gradient" color="blue" fullWidth>
+        <Button
+          onClick={handleBurn}
+          color="blue"
+          className=" w-full"
+          disabled={isPending}
+        >
           Burn Index Tokens
         </Button>
       </CardFooter>
