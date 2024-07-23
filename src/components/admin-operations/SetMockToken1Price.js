@@ -9,17 +9,32 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import { TransactionModal } from "./modal";
+import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
+import { useReadContract } from "wagmi";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
+import { MockToken1Address } from "@/lib/contracts/MockToken1";
 
-export function SetMinterAddress() {
+export function SetMockToken1Price() {
   const [showModal, setShowModal] = useState(false);
-  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [price, setPrice] = useState(0);
 
-  const minter = "0x23904dojvq9847r";
+  const { data, isLoading } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "getTokenPrice",
+    args: [MockToken1Address],
+  });
+
+  useEffect(() => {
+    console.log(data);
+    if (!data) return;
+    setPrice(Number(data) / 10 ** 6);
+  }, [data]);
 
   function handleChange(e) {
-    setAddress(e.target.value);
+    setAmount(e.target.value);
   }
 
   function handleSetPrice() {
@@ -50,23 +65,24 @@ export function SetMinterAddress() {
       )}
       <CardBody className="">
         <div className="relative">
-          {/* <Image
+          <Image
             height={30}
             width={30}
-            src="/sui-icon.svg"
+            src="/mt1.png"
             className="absolute top-[14px] left-2"
             alt="icon"
-          ></Image> */}
+          ></Image>
           <input
-            className="p-4 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
-            placeholder="Enter Minter Address"
+            className="p-4 pl-12 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
+            placeholder="Enter Price"
             size="lg"
             onChange={handleChange}
-            value={address}
+            value={amount}
+            type="number"
           ></input>
         </div>
         <div className="flex justify-center pr-4 mt-2 ">
-          Current Minter : {minter}
+          Token1 Price : {price} USD
         </div>
       </CardBody>
       <CardFooter className="pt-0">
@@ -76,7 +92,7 @@ export function SetMinterAddress() {
           color="blue"
           fullWidth
         >
-          Set Minter
+          Set Price
         </Button>
       </CardFooter>
     </Card>

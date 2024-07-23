@@ -60,7 +60,7 @@ export function MintIndexToken({}) {
             <Image
               height={30}
               width={30}
-              src="/sui-icon.svg"
+              src="/int.png"
               className="absolute top-[39px] left-2"
               alt="icon"
             ></Image>

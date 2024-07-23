@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { SetMockToken0Price } from "@/components/SetMockToken0Price";
-import { SetMockToken1Price } from "@/components/SetMockToken1Price";
-import { SetMinterAddress } from "@/components/SetMinterAddress";
+import { SetMockToken0Price } from "@/components/admin-operations/SetMockToken0Price";
+import { SetMockToken1Price } from "@/components/admin-operations/SetMockToken1Price";
+import { SetMinterAddress } from "@/components/admin-operations/SetMinterAddress";
 import { ConnectKitButton } from "connectkit";
 import Navbar from "@/components/navbar";
 

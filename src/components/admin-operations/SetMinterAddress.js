@@ -9,17 +9,15 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import { TransactionModal } from "./modal";
+import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
 
-export function SetMockToken0Price() {
+export function SetMinterAddress() {
   const [showModal, setShowModal] = useState(false);
-  const [amount, setAmount] = useState(0);
-
-  const price = 1;
+  const [address, setAddress] = useState("");
 
   function handleChange(e) {
-    setAmount(e.target.value);
+    setAddress(e.target.value);
   }
 
   function handleSetPrice() {
@@ -50,24 +48,20 @@ export function SetMockToken0Price() {
       )}
       <CardBody className="">
         <div className="relative">
-          <Image
+          {/* <Image
             height={30}
             width={30}
             src="/sui-icon.svg"
             className="absolute top-[14px] left-2"
             alt="icon"
-          ></Image>
+          ></Image> */}
           <input
-            className="p-4 pl-12 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
-            placeholder="Enter Price"
+            className="p-4 bg-gray-200 rounded-[12px] border-gray-100 h-[58px] w-full font-[500] text-[16px] leading-[18px] text-gray-800"
+            placeholder="Enter Minter Address"
             size="lg"
             onChange={handleChange}
-            value={amount}
-            type="number"
+            value={address}
           ></input>
-        </div>
-        <div className="flex justify-center pr-4 mt-2 ">
-          Token0 Price : {price} USD
         </div>
       </CardBody>
       <CardFooter className="pt-0">
@@ -77,7 +71,7 @@ export function SetMockToken0Price() {
           color="blue"
           fullWidth
         >
-          Set Price
+          Set Minter
         </Button>
       </CardFooter>
     </Card>

@@ -65,7 +65,7 @@ export function DepositMockToken1({}) {
             <Image
               height={30}
               width={30}
-              src="/sui-icon.svg"
+              src="/mt1.png"
               className="absolute top-[39px] left-2"
               alt="icon"
             ></Image>

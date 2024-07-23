@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardHeader,
@@ -9,14 +10,29 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Image from "next/image";
-import { TransactionModal } from "./modal";
+import { TransactionModal } from "../modal";
 import { useEffect, useState } from "react";
+import { useReadContract } from "wagmi";
+import { IndexTokenAbi, IndexTokenAddress } from "@/lib/contracts/IndexToken";
+import { MockToken0Address } from "@/lib/contracts/MockToken0";
 
-export function SetMockToken1Price() {
+export function SetMockToken0Price() {
   const [showModal, setShowModal] = useState(false);
+  const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(0);
 
-  const price = 1;
+  const { data, isLoading } = useReadContract({
+    abi: IndexTokenAbi,
+    address: IndexTokenAddress,
+    functionName: "getTokenPrice",
+    args: [MockToken0Address],
+  });
+
+  useEffect(() => {
+    console.log(data);
+    if (!data) return;
+    setPrice(Number(data) / 10 ** 6);
+  }, [data]);
 
   function handleChange(e) {
     setAmount(e.target.value);
@@ -53,7 +69,7 @@ export function SetMockToken1Price() {
           <Image
             height={30}
             width={30}
-            src="/sui-icon.svg"
+            src="/mt0.png"
             className="absolute top-[14px] left-2"
             alt="icon"
           ></Image>
@@ -67,7 +83,7 @@ export function SetMockToken1Price() {
           ></input>
         </div>
         <div className="flex justify-center pr-4 mt-2 ">
-          Token1 Price : {price} USD
+          Token0 Price : {price} USD
         </div>
       </CardBody>
       <CardFooter className="pt-0">
