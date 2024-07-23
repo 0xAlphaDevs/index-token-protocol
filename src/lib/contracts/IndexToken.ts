@@ -1,4 +1,4 @@
-export const IndexTokenAddress = "0x52706a8AEa5a623cD8ED80e523640fE862172029";
+export const IndexTokenAddress = "0x4612869797a1f8ec40d5fc12fe17519674dacf30";
 
 export const IndexTokenAbi = [
   {

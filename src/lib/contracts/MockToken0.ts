@@ -1,4 +1,4 @@
-export const MockToken0Address = "0xcfa503F0Cee632722ce7bA05Ffdea8B2378842a8";
+export const MockToken0Address = "0x3daa9b9f3ba4a5828473075ce68c704fec124e73";
 
 export const MockToken0Abi = [
   {

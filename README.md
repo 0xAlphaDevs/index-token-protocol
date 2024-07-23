@@ -24,11 +24,11 @@ This frontend demonstrates a Crypto Index token built on top of two tokens i.e. 
 
 ## Links
 
-- [Deployed URL]()
-- [Presentation]()
+- [Deployed URL](https://index-token.vercel.app/)
+- [Presentation](https://www.canva.com/design/DAGLxOfLrNw/bZrrmu6hF6QCc6BOtHHSxg/view?utm_content=DAGLxOfLrNw&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 - [Video Demo]()
 
-## Deployed Contract Address - Arbitrum Sepolia Testnet
+## Deployed Contract Address - Polygon Cardona
 
 - [Mock Token 0 - 0x3daa9b9f3ba4a5828473075ce68c704fec124e73](https://cardona-zkevm.polygonscan.com/address/0x3daa9b9f3ba4a5828473075ce68c704fec124e73)
 - [Mock Token 1 - 0x456a103f7b5b8a5401a99ef244029b8c67c2be78](https://cardona-zkevm.polygonscan.com/address/0x456a103f7b5b8a5401a99ef244029b8c67c2be78)
