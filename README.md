@@ -24,7 +24,7 @@ This frontend demonstrates a Crypto Index token built on top of two tokens i.e. 
 
 ## Links
 
-- [Deployed URL](https://index-token.vercel.app/)
+- [Deployed URL](https://index-token-cardona.vercel.app/)
 - [Presentation](https://www.canva.com/design/DAGLxOfLrNw/bZrrmu6hF6QCc6BOtHHSxg/view?utm_content=DAGLxOfLrNw&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 - [Video Demo]()
 
