@@ -10,7 +10,7 @@ const config = createConfig(
   getDefaultConfig({
     walletConnectProjectId:
       process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "",
-    chains: [arbitrumSepolia, polygonZkEvmCardona],
+    chains: [polygonZkEvmCardona],
     appName: "Index Token Protocol",
   })
 );
