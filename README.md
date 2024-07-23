@@ -1,6 +1,7 @@
 # Index Token Project
 
-This is project demonstrating a Crypto Index token built on top of two token i.e. MockToken0 and MockToken1 in our case.
+Index Token is a decentralized protocol that enables users to own a diversified portfolio of crypto assets by holding one token.
+This frontend demonstrates a Crypto Index token built on top of two tokens i.e. MockToken0 and MockToken1. Also minting and admin operations are allowed for testing different functions.
 
 ## Features
 
@@ -29,9 +30,9 @@ This is project demonstrating a Crypto Index token built on top of two token i.e
 
 ## Deployed Contract Address - Arbitrum Sepolia Testnet
 
-- [Mock Token 0 - 0xcfa503F0Cee632722ce7bA05Ffdea8B2378842a8](https://sepolia.arbiscan.io/address/0xcfa503F0Cee632722ce7bA05Ffdea8B2378842a8#code)
-- [Mock Token 1 - 0xDd28F71e2011B59675fA4822125fCA7e581F1d4D](https://sepolia.arbiscan.io/address/0xDd28F71e2011B59675fA4822125fCA7e581F1d4D#code)
-- [Index Token - 0x52706a8AEa5a623cD8ED80e523640fE862172029](https://sepolia.arbiscan.io/address/0x52706a8AEa5a623cD8ED80e523640fE862172029#code)
+- [Mock Token 0 - 0x3daa9b9f3ba4a5828473075ce68c704fec124e73](https://cardona-zkevm.polygonscan.com/address/0x3daa9b9f3ba4a5828473075ce68c704fec124e73)
+- [Mock Token 1 - 0x456a103f7b5b8a5401a99ef244029b8c67c2be78](https://cardona-zkevm.polygonscan.com/address/0x456a103f7b5b8a5401a99ef244029b8c67c2be78)
+- [Index Token - 0x4612869797a1f8ec40d5fc12fe17519674dacf30](https://cardona-zkevm.polygonscan.com/address/0x4612869797a1f8ec40d5fc12fe17519674dacf30)
 
 ## Instructions to Setup
 

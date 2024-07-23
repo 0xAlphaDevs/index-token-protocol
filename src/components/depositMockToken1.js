@@ -154,7 +154,7 @@ export function DepositMockToken1() {
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">
-          Balance : {Number(balance) / 10 ** 18} MT0
+          Balance : {(Number(balance) / 10 ** 18).toFixed(3)} MT0
         </div>
       </CardBody>
       <CardFooter className="pt-0">

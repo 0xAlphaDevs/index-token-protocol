@@ -114,7 +114,7 @@ export function MintIndexToken({}) {
           </div>
         </div>
         <div className="flex justify-center pr-4 mt-2 text-lg">
-          Max Mintable : {totalMintableAmount} INT
+          Max Mintable : {totalMintableAmount.toFixed(3)} INT
         </div>
       </CardBody>
       <CardFooter className="pt-0">

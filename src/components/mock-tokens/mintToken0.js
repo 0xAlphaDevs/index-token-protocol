@@ -113,7 +113,7 @@ export function MintToken0({}) {
           </button>
         </div>
         <div className="flex justify-end pr-4 mt-2 font-semibold">
-          Balance : {balance} MT0
+          Balance : {balance.toFixed(3)} MT0
         </div>
       </CardBody>
       <CardFooter className="pt-0">
