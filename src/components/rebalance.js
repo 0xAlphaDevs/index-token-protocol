@@ -76,7 +76,6 @@ export function Rebalance({}) {
         abi: IndexTokenAbi,
         functionName: "rebalance",
         args: [BigInt(token0Weight), BigInt(token1Weight)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter valid weights");

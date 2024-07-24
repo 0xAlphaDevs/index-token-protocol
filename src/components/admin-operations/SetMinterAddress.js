@@ -33,7 +33,6 @@ export function SetMinterAddress() {
         abi: IndexTokenAbi,
         functionName: "setMinter",
         args: [address],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid ETH address");

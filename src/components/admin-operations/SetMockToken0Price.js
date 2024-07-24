@@ -49,7 +49,6 @@ export function SetMockToken0Price() {
         abi: IndexTokenAbi,
         functionName: "setMockTokenPrice",
         args: [MockToken0Address, BigInt(amount * 10 ** 6)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid amount");

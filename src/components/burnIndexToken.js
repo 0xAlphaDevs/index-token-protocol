@@ -50,7 +50,6 @@ export function BurnIndexToken({}) {
         abi: IndexTokenAbi,
         functionName: "burn",
         args: [address, BigInt(amount * 10 ** 18)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid amount");

@@ -61,7 +61,6 @@ export function DepositMockToken1() {
         abi: IndexTokenAbi,
         functionName: "depositReserveTokens",
         args: [MockToken1Address, BigInt(amount * 10 ** 18)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid amount");
@@ -75,7 +74,6 @@ export function DepositMockToken1() {
         abi: MockToken1Abi,
         functionName: "approve",
         args: [IndexTokenAddress, BigInt(amount * 10 ** 18)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid amount");

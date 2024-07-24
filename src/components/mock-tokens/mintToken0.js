@@ -50,7 +50,6 @@ export function MintToken0({}) {
         abi: MockToken0Abi,
         functionName: "mint",
         args: [address, BigInt(amount * 10 ** 18)],
-        chainId: 421_614,
       });
     } else {
       alert("Please enter a valid amount");
