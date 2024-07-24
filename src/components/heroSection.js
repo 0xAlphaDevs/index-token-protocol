@@ -125,10 +125,10 @@ export default function HeroSection() {
                 Launch App
               </a>
               <a
-                href="https://mht.alphadevs.dev"
+                href="https://alphadevs.dev"
                 className="text-sm font-semibold leading-6 text-gray-700 bg-gray-200 p-2 rounded-[25px] "
               >
-                🧑‍💻 Developed by <a>Harsh Tyagi</a>
+                🧑‍💻 Developed by <a>Team AlphaDevs</a>
               </a>
             </div>
           </div>

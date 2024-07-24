@@ -10,10 +10,10 @@ export default function Footer() {
         &copy; 2024 by{" "}
         <a
           className="underline"
-          href="https://github.com/mr-harshtyagi"
+          href="https://github.com/0xalphadevs"
           target="__blank"
         >
-          mr-harshtyagi
+          0xAlphaDevs
         </a>
         . All rights reserved.
       </Typography>
