@@ -47,33 +47,28 @@ Follow these instructions to set up and run the project:
 
 ## Our Solution (Architecture)
 
-![image](/public/appDemo/architecture.png)
+![image](/public/appDemo/protocol_architecture.png)
 
 ## App Demo Screenshots
 
-![image](/public/appDemo/1.jpeg)
+![image](/public/appDemo/0.png)
 
-![image](/public/appDemo/2.jpeg)
+![image](/public/appDemo/1.png)
 
-![image](/public/appDemo/3.jpeg)
+![image](/public/appDemo/2.png)
 
-![image](/public/appDemo/4.jpeg)
+![image](/public/appDemo/3.png)
 
-![image](/public/appDemo/5.jpeg)
+![image](/public/appDemo/4.png)
 
-![image](/public/appDemo/6.jpeg)
-
-![image](/public/appDemo/7.jpeg)
-
-![image](/public/appDemo/8.jpeg)
-
-## Future Vision
-
--
+![image](/public/appDemo/5.png)
 
 ## Tech Stack
 
--
+- Polygon Cardona zkEVM
+- Solidity
+- Next JS
+- Wagmi
 
 ## Team
 
