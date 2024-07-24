@@ -26,7 +26,7 @@ This frontend demonstrates a Crypto Index token built on top of two tokens i.e. 
 
 - [Deployed URL](https://index-token-cardona.vercel.app/)
 - [Presentation](https://www.canva.com/design/DAGLxOfLrNw/bZrrmu6hF6QCc6BOtHHSxg/view?utm_content=DAGLxOfLrNw&utm_campaign=designshare&utm_medium=link&utm_source=editor)
-- [Video Demo]()
+- [Video Demo](https://youtu.be/mLXOva4Anw0)
 
 ## Deployed Contract Address - Polygon Cardona
 
